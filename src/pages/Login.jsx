@@ -5,6 +5,7 @@ import api from "../configs/api";
 import { useDispatch } from "react-redux";
 import { login } from "../app/features/authSlice";
 import toast from "react-hot-toast";
+import Loader from "../components/Loader";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -28,6 +29,8 @@ const Login = () => {
       dispatch(login(data));
       localStorage.setItem("token", data.token);
       toast.success(data.message);
+
+      window.location.href = "/app";
     } catch (error) {
       toast(error?.response?.data?.message || error.message);
       setLoading(false);
