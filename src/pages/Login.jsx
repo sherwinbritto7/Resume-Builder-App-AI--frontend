@@ -28,9 +28,6 @@ const Login = () => {
       dispatch(login(data));
       localStorage.setItem("token", data.token);
       toast.success(data.message);
-
-      // Redirect to dashboard
-      window.location.href = "/dashboard";
     } catch (error) {
       toast(error?.response?.data?.message || error.message);
       setLoading(false);
