@@ -12,6 +12,7 @@ const Login = () => {
   const query = new URLSearchParams(window.location.search);
   const urlState = query.get("state");
   const [state, setState] = React.useState(urlState || "login");
+  const [loading, setLoading] = React.useState(false);
 
   const [formData, setFormData] = React.useState({
     name: "",
@@ -21,13 +22,18 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const { data } = await api.post(`/api/users/${state}`, formData);
       dispatch(login(data));
       localStorage.setItem("token", data.token);
       toast.success(data.message);
+
+      // Redirect to dashboard
+      window.location.href = "/dashboard";
     } catch (error) {
       toast(error?.response?.data?.message || error.message);
+      setLoading(false);
     }
   };
 
@@ -37,6 +43,7 @@ const Login = () => {
   };
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50">
+      {loading && <Loader />}
       <form
         onSubmit={handleSubmit}
         className="sm:w-[350px] w-full text-center border border-gray-300/60 rounded-2xl px-8 bg-white"
@@ -97,9 +104,15 @@ const Login = () => {
         </div>
         <button
           type="submit"
-          className="mt-2 w-full h-11 rounded-full text-white bg-green-500 hover:opacity-90 transition-opacity"
+          disabled={loading}
+          className={`mt-2 w-full h-11 rounded-full text-white bg-green-500 hover:opacity-90 transition-opacity flex items-center justify-center gap-2 ${
+            loading ? "opacity-70 cursor-not-allowed" : ""
+          }`}
         >
-          {state === "login" ? "Login" : "Sign up"}
+          {loading && (
+            <div className="w-5 h-5 border-2 border-t-2 border-white rounded-full animate-spin"></div>
+          )}
+          <span>{state === "login" ? "Login" : "Sign up"}</span>
         </button>
         <p
           onClick={() =>
