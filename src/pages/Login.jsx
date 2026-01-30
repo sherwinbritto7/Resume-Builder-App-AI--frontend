@@ -1,11 +1,10 @@
-import { ArrowLeft, Lock, Mail, User2Icon } from "lucide-react";
+import { ArrowLeft, Loader, Lock, Mail, User2Icon } from "lucide-react";
 import { Link } from "react-router-dom";
 import React from "react";
 import api from "../configs/api";
 import { useDispatch } from "react-redux";
 import { login } from "../app/features/authSlice";
 import toast from "react-hot-toast";
-import Loader from "../components/Loader";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -105,11 +104,10 @@ const Login = () => {
             loading ? "opacity-70 cursor-not-allowed" : ""
           }`}
         >
-          {loading && (
-            <div className="w-5 h-5 border-2 border-t-2 border-white rounded-full animate-spin"></div>
-          )}
+          {loading && <Loader className="animate-spin w-5 h-5 text-white" />}
           <span>{state === "login" ? "Login" : "Sign up"}</span>
         </button>
+
         <p
           onClick={() =>
             setState((prev) => (prev === "login" ? "register" : "login"))
