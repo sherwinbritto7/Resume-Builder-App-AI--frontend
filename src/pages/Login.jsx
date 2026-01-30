@@ -29,11 +29,8 @@ const Login = () => {
       dispatch(login(data));
       localStorage.setItem("token", data.token);
       toast.success(data.message);
-
-      window.location.href = "/app";
     } catch (error) {
       toast(error?.response?.data?.message || error.message);
-      setLoading(false);
     }
   };
 
@@ -43,7 +40,6 @@ const Login = () => {
   };
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50">
-      {loading && <Loader />}
       <form
         onSubmit={handleSubmit}
         className="sm:w-[350px] w-full text-center border border-gray-300/60 rounded-2xl px-8 bg-white"
