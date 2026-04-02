@@ -7,6 +7,10 @@ import {
   UploadCloud,
   UploadCloudIcon,
   XIcon,
+  FileTextIcon,
+  ClockIcon,
+  LayoutDashboardIcon,
+  Zap,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { dummyResumeData } from "../assets/assets";
@@ -127,81 +131,143 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div>
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <p className="text-2xl font-medium mb-6 bg-gradient-to-r from-slate-600 to-slate-700 bg-clip-text text-transparent sm:hidden">
-          Welcome, John Doe
-        </p>
-        <div className="flex gap-4">
+    <div className="min-h-screen">
+      <div className="max-w-7xl mx-auto px-4 py-8 md:py-12">
+        {/* Dashboard Header */}
+        <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2 mb-4 text-xs font-semibold tracking-widest uppercase text-green-700 bg-green-500/10 border border-green-200 rounded-full px-4 py-1.5 w-fit">
+              <Zap className="size-3" />
+              <span>Workspace</span>
+            </div>
+            <h1 className="text-3xl md:text-5xl font-bold text-slate-800 tracking-tight">
+              Welcome back, <span className="bg-gradient-to-r from-green-700 to-green-500 bg-clip-text text-transparent">{user?.name?.split(" ")[0] || "Resumer"}</span>
+            </h1>
+            <p className="text-slate-500 mt-3 text-lg max-w-2xl">
+              Create, edit and manage your professional resumes with AI-powered assistance.
+            </p>
+          </div>
+        </div>
+
+        {/* Action Section */}
+        <div className="flex flex-col sm:flex-row gap-6 mb-16">
           <button
             onClick={() => setShowCreateResume(true)}
-            className="w-full bg-white sm:max-w-36 h-48 flex flex-col items-center justify-center rounded-lg gap-2 text-slate-600 border border-dashed border-slate-300 group-hover:border-indigo-500 hover:shadow-lg transition-all duration-300 cursor-pointer"
+            className="group flex-1 bg-white p-8 rounded-3xl border border-slate-200 hover:border-green-500 hover:shadow-2xl hover:shadow-green-500/10 transition-all duration-500 text-left flex flex-col gap-5"
           >
-            <Plus className="size-11 transition-all duration-300 p-2.5 bg-gradient-to-br from-indigo-300 to-indigo-500 text-white rounded-full" />
-            <p className="text-sm group-hover:text-indigo-600 transition-all duration-300">
-              Create Resume
-            </p>
+            <div className="p-4 bg-green-50 text-green-600 rounded-2xl group-hover:bg-green-500 group-hover:text-white transition-all duration-500 w-fit shadow-sm">
+              <Plus className="size-8" />
+            </div>
+            <div>
+              <h3 className="text-xl font-bold text-slate-800">Create Resume</h3>
+              <p className="text-slate-500 text-sm mt-1.5 leading-relaxed">Land your dream job with a fresh, AI-optimized resume started from scratch.</p>
+            </div>
           </button>
+
           <button
             onClick={() => setShowUploadResume(true)}
-            className="w-full bg-white sm:max-w-36 h-48 flex flex-col items-center justify-center rounded-lg gap-2 text-slate-600 border border-dashed border-slate-300 group-hover:border-purple-500 hover:shadow-lg transition-all duration-300 cursor-pointer"
+            className="group flex-1 bg-white p-8 rounded-3xl border border-slate-200 hover:border-green-400 hover:shadow-2xl hover:shadow-green-400/10 transition-all duration-500 text-left flex flex-col gap-5"
           >
-            <UploadCloudIcon className="size-11 transition-all duration-300 p-2.5 bg-gradient-to-br from-purple-300 to-purple-500 text-white rounded-full" />
-            <p className="text-sm group-hover:text-purple-600 transition-all duration-300">
-              Upload Existing
-            </p>
+            <div className="p-4 bg-green-50 text-green-500 rounded-2xl group-hover:bg-green-500 group-hover:text-white transition-all duration-500 w-fit shadow-sm">
+              <UploadCloudIcon className="size-8" />
+            </div>
+            <div>
+              <h3 className="text-xl font-bold text-slate-800">Upload Existing</h3>
+              <p className="text-slate-500 text-sm mt-1.5 leading-relaxed">Already have a resume? Let our AI parse your PDF and improve it instantly.</p>
+            </div>
           </button>
         </div>
-        <hr className="border-slate-300 my-6 sm:w-[305px]" />
-        <div className="grid grid-cols-2 sm:flex flex-wrap gap-4">
-          {allResumes.map((resume, index) => {
-            const baseColor = colors[index % colors.length];
-            return (
-              <button
-                onClick={() => navigate(`/app/builder/${resume._id}`)}
-                key={index}
-                className="relative w-full sm:max-w-36 h-48 flex flex-col items-center justify-center rounded-lg gap-2 border group hover:shadow-lg transition-all duration-300 cursor-pointer"
-                style={{
-                  background: `linear-gradient(135deg,${baseColor}10,${baseColor}40)
-                  `,
-                  borderColor: baseColor + "40",
-                }}
+
+        {/* Resumes Grid */}
+        <div className="mb-8 flex items-center justify-between border-b border-slate-100 pb-5">
+          <h2 className="text-2xl font-bold text-slate-800 flex items-center gap-3">
+            <FileTextIcon className="size-6 text-green-600" />
+            Recent Resumes
+          </h2>
+          <div className="text-xs font-bold text-green-700 bg-green-50 px-4 py-2 rounded-full border border-green-100 uppercase tracking-tighter">
+            {allResumes.length} {allResumes.length === 1 ? 'Project' : 'Projects'}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-8">
+          {allResumes.length === 0 ? (
+            <div className="col-span-full py-24 flex flex-col items-center justify-center text-slate-400 border-2 border-dashed border-slate-200 rounded-4xl bg-slate-50/30">
+              <div className="p-6 bg-white rounded-full shadow-sm mb-6">
+                <FileTextIcon className="size-10 text-slate-200" />
+              </div>
+              <p className="text-xl font-semibold text-slate-500">No resumes yet</p>
+              <p className="text-slate-400 mt-2 mb-6">Your professional journey starts here.</p>
+              <button 
+                 onClick={() => setShowCreateResume(true)}
+                 className="px-8 py-3 bg-green-500 text-white font-bold rounded-full hover:bg-green-600 transition-all active:scale-95 shadow-lg shadow-green-500/20"
               >
-                <FilePenLineIcon
-                  className="size-7 group-hover:scale-105 transition-all"
-                  style={{ color: baseColor }}
-                />
-                <p
-                  className="text-sm group-hover:scale-105 transition-all px-2 text-center"
-                  style={{ color: baseColor }}
-                >
-                  {resume.title}
-                </p>
-                <p
-                  className="absolute bottom-1 text-[11px] text-slate-400 group-hover:text-slate-500 transition-all duration-300 px-2 text-center"
-                  style={{ color: baseColor + "90" }}
-                >
-                  Updated on {new Date(resume.updatedAt).toLocaleDateString()}
-                </p>
-                <div
-                  onClick={(e) => e.stopPropagation()}
-                  className="absolute top-1 right-1 group-hover:flex items-center hidden"
-                >
-                  <TrashIcon
-                    onClick={() => deleteResume(resume._id)}
-                    className="size-7 p-1.5 hover:bg-white/50 rounded text-slate-700 transition-colors"
-                  />
-                  <PencilIcon
-                    onClick={() => {
-                      setEditResumeId(resume._id);
-                      setTitle(resume.title);
-                    }}
-                    className="size-7 p-1.5 hover:bg-white/50 rounded text-slate-700 transition-colors"
-                  />
-                </div>
+                Create your first resume
               </button>
-            );
-          })}
+            </div>
+          ) : (
+            allResumes.map((resume, index) => {
+              const baseColor = colors[index % colors.length];
+              return (
+                <div
+                  key={resume._id}
+                  className="group relative bg-white border border-slate-200 rounded-3xl overflow-hidden hover:shadow-2xl hover:shadow-slate-200/50 hover:-translate-y-2 transition-all duration-500"
+                >
+                  <div 
+                    onClick={() => navigate(`/app/builder/${resume._id}`)}
+                    className="h-44 cursor-pointer flex items-center justify-center relative overflow-hidden"
+                    style={{ background: `linear-gradient(135deg, ${baseColor}05, ${baseColor}20)` }}
+                  >
+                    <div className="absolute inset-0 opacity-[0.03]" style={{ 
+                      backgroundImage: `radial-gradient(circle at 2px 2px, ${baseColor} 1px, transparent 0)`,
+                      backgroundSize: '24px 24px'
+                    }} />
+                    <div className="p-5 bg-white rounded-2xl shadow-sm group-hover:shadow-md transition-all duration-500 group-hover:scale-110">
+                      <FileTextIcon className="size-10" style={{ color: baseColor }} />
+                    </div>
+                  </div>
+                  
+                  <div className="p-5 relative">
+                    <h3 
+                      onClick={() => navigate(`/app/builder/${resume._id}`)}
+                      className="font-bold text-slate-800 truncate cursor-pointer hover:text-green-600 transition-colors uppercase tracking-tight text-xs mb-2"
+                    >
+                      {resume.title}
+                    </h3>
+                    <div className="flex items-center gap-2 text-slate-400 text-[10px] font-semibold uppercase tracking-widest">
+                      <ClockIcon className="size-3" />
+                      <span>{new Date(resume.updatedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                    </div>
+
+                    <div className="flex items-center gap-2 mt-5 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                      <button
+                        onClick={() => navigate(`/app/builder/${resume._id}`)}
+                        className="flex-1 py-1.5 bg-slate-900 text-white text-[10px] font-bold rounded-lg hover:bg-green-600 transition-colors"
+                      >
+                        OPEN
+                      </button>
+                      <button
+                        onClick={() => {
+                          setEditResumeId(resume._id);
+                          setTitle(resume.title);
+                        }}
+                        className="p-1.5 text-slate-400 hover:text-green-600 hover:bg-green-50 rounded-lg transition-all"
+                        title="Rename"
+                      >
+                        <PencilIcon className="size-4" />
+                      </button>
+                      <button
+                        onClick={() => deleteResume(resume._id)}
+                        className="p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
+                        title="Delete"
+                      >
+                        <TrashIcon className="size-4" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              );
+            })
+          )}
         </div>
 
         <div>
