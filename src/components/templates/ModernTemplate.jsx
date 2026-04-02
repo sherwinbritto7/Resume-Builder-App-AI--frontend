@@ -11,7 +11,7 @@ const ModernTemplate = ({ data, accentColor }) => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto bg-white text-gray-800">
+    <div className="w-full min-h-full text-gray-800">
       {/* Header */}
       <header
         className="p-8 text-white border-l-8"
@@ -98,7 +98,8 @@ const ModernTemplate = ({ data, accentColor }) => {
               {data.experience.map((exp, index) => (
                 <div
                   key={index}
-                  className="relative pl-6 border-l border-gray-200"
+                  className="relative pl-6 border-l-2"
+                  style={{ borderLeftColor: accentColor }}
                 >
                   <div className="flex justify-between items-start mb-2">
                     <div>

@@ -136,19 +136,19 @@ const Dashboard = () => {
         <p className="text-2xl font-medium mb-6 bg-gradient-to-r from-slate-600 to-slate-700 bg-clip-text text-transparent sm:hidden">
           Welcome, John Doe
         </p>
-        <div className="flex gap-4">
+        <div className="flex flex-col sm:flex-row gap-6 mb-12">
           <button
             onClick={() => setShowCreateResume(true)}
-            className="group flex-1 bg-white p-8 rounded-3xl border border-slate-200 hover:border-green-500 hover:shadow-2xl hover:shadow-green-500/10 transition-all duration-500 text-left flex flex-col gap-5"
+            className="group flex-1 bg-white p-6 md:p-8 rounded-3xl border border-slate-100 hover:border-green-500 hover:shadow-2xl hover:shadow-green-500/10 transition-all duration-500 text-left flex flex-col gap-4 md:gap-5"
           >
-            <div className="p-4 bg-green-50 text-green-600 rounded-2xl group-hover:bg-green-500 group-hover:text-white transition-all duration-500 w-fit shadow-sm">
-              <Plus className="size-8" />
+            <div className="p-3 md:p-4 bg-green-50 text-green-600 rounded-2xl group-hover:bg-green-500 group-hover:text-white transition-all duration-500 w-fit shadow-sm">
+              <Plus className="size-6 md:size-8" />
             </div>
             <div>
-              <h3 className="text-xl font-bold text-slate-800">
+              <h3 className="text-lg md:text-xl font-bold text-slate-800">
                 Create Resume
               </h3>
-              <p className="text-slate-500 text-sm mt-1.5 leading-relaxed">
+              <p className="text-slate-500 text-xs md:text-sm mt-1.5 leading-relaxed">
                 Land your dream job with a fresh, AI-optimized resume started
                 from scratch.
               </p>
@@ -157,16 +157,16 @@ const Dashboard = () => {
 
           <button
             onClick={() => setShowUploadResume(true)}
-            className="group flex-1 bg-white p-8 rounded-3xl border border-slate-200 hover:border-green-400 hover:shadow-2xl hover:shadow-green-400/10 transition-all duration-500 text-left flex flex-col gap-5"
+            className="group flex-1 bg-white p-6 md:p-8 rounded-3xl border border-slate-100 hover:border-green-400 hover:shadow-2xl hover:shadow-green-400/10 transition-all duration-500 text-left flex flex-col gap-4 md:gap-5"
           >
-            <div className="p-4 bg-green-50 text-green-500 rounded-2xl group-hover:bg-green-500 group-hover:text-white transition-all duration-500 w-fit shadow-sm">
-              <UploadCloudIcon className="size-8" />
+            <div className="p-3 md:p-4 bg-green-50 text-green-500 rounded-2xl group-hover:bg-green-500 group-hover:text-white transition-all duration-500 w-fit shadow-sm">
+              <UploadCloudIcon className="size-6 md:size-8" />
             </div>
             <div>
-              <h3 className="text-xl font-bold text-slate-800">
+              <h3 className="text-lg md:text-xl font-bold text-slate-800">
                 Upload Existing
               </h3>
-              <p className="text-slate-500 text-sm mt-1.5 leading-relaxed">
+              <p className="text-slate-500 text-xs md:text-sm mt-1.5 leading-relaxed">
                 Already have a resume? Let our AI parse your PDF and improve it
                 instantly.
               </p>

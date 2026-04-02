@@ -10,10 +10,10 @@
     @apply cursor-pointer;
   }
   input:not([type="checkbox"]) {
-    @apply outline-none focus:ring border border-gray-300 focus:ring-blue-500 focus:border-blue-500 rounded-lg;
+    @apply outline-none focus:ring border border-gray-300 focus:ring-green-500 focus:border-green-500 rounded-lg;
   }
   textarea {
-    @apply outline-none focus:ring border border-gray-300 focus:ring-blue-500 focus:border-blue-500 rounded-lg resize-none;
+    @apply outline-none focus:ring border border-gray-300 focus:ring-green-500 focus:border-green-500 rounded-lg resize-none;
   }
 }
 
@@ -24,4 +24,38 @@
 }
 .animate-spin {
   animation: spin 1s linear infinite;
+}
+
+@media print {
+  body {
+    visibility: hidden;
+    background-color: white !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #resume-preview,
+  #resume-preview * {
+    visibility: visible !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  #resume-preview {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    z-index: 999999 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: white !important;
+  }
+
+  /* Force hide all other major UI components just in case */
+  nav,
+  .no-print {
+    display: none !important;
+  }
 }

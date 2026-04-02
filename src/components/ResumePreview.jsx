@@ -19,46 +19,16 @@ const ResumePreview = ({ data, template, accentColor, classes = "" }) => {
   };
 
   return (
-    <div className="w-full bg-gray-100">
+    <div className="w-full h-full flex justify-center bg-slate-50/50 rounded-2xl p-0 overflow-hidden">
       <div
         id="resume-preview"
         className={
-          "border border-gray-200 print:shadow-none print:border-none" + classes
+          "w-[210mm] max-w-full aspect-210/297 bg-white shadow-none md:shadow-[0_0_50px_rgba(0,0,0,0.06)] border border-slate-100 print:shadow-none print:border-none ring-1 ring-slate-200/50 transition-all duration-300 " +
+          classes
         }
       >
         {renderTemplate()}
       </div>
-      <style jsx>
-        {`
-          @page {
-            size: letter;
-            margin: 0;
-          }
-          @media print {
-            html, body {
-              width: 8.5in;
-              height: 11in;
-              overflow: hidden;
-            }
-            body * {
-              visibility: hidden;
-            }
-            #resume-preview, #resume-preview * {
-              visibility: visible;
-            }
-            #resume-preview {
-              position: absolute;
-              left: 0;
-              top: 0;
-              width:100%;
-              height:auto;
-              margin:0;
-              padding:0;
-              box-shadow:none !important;
-              border:none !important;
-          }
-        `}
-      </style>
     </div>
   );
 };

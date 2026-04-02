@@ -11,7 +11,7 @@ const ClassicTemplate = ({ data, accentColor }) => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-8 bg-white text-gray-800 leading-relaxed">
+    <div className="w-full min-h-full p-8 md:p-12 text-gray-800 leading-relaxed">
       {/* Header */}
       <header
         className="text-center mb-8 pb-6 border-b-2"
@@ -84,7 +84,7 @@ const ClassicTemplate = ({ data, accentColor }) => {
             {data.experience.map((exp, index) => (
               <div
                 key={index}
-                className="border-l-3 pl-4"
+                className="border-l-4 pl-6"
                 style={{ borderColor: accentColor }}
               >
                 <div className="flex justify-between items-start mb-2">
@@ -126,7 +126,7 @@ const ClassicTemplate = ({ data, accentColor }) => {
             {data.project.map((proj, index) => (
               <div
                 key={index}
-                className="flex justify-between items-start border-l-3 border-gray-300 pl-6"
+                className="flex justify-between items-start border-l-4 border-slate-200 pl-6"
               >
                 <div>
                   <li className="font-semibold text-gray-800 ">{proj.name}</li>

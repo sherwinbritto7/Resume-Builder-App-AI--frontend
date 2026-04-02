@@ -64,6 +64,8 @@ const ResumeBuilder = () => {
 
   const [activeSectionIndex, setActiveSectionIndex] = useState(0);
   const [removeBackground, setRemoveBackground] = useState(false);
+  const [showPreviewMobile, setShowPreviewMobile] = useState(false);
+  const [isPrinting, setIsPrinting] = useState(false);
 
   const sections = [
     { id: "personal", name: "Personal Info", icon: User },
@@ -106,7 +108,14 @@ const ResumeBuilder = () => {
   };
 
   const downloadResume = () => {
-    window.print();
+    const originalTitle = document.title;
+    document.title = (resumeData.title || "Resume") + " - ZenResume";
+    setIsPrinting(true);
+    setTimeout(() => {
+        window.print();
+        setIsPrinting(false);
+        document.title = originalTitle;
+    }, 500);
   };
 
   const saveResume = async () => {
@@ -140,10 +149,22 @@ const ResumeBuilder = () => {
     loadExistingResume();
   }, []);
 
+  if (isPrinting) {
+    return (
+        <div className="bg-white min-h-screen flex justify-center p-0">
+            <ResumePreview
+                data={resumeData}
+                template={resumeData.template}
+                accentColor={resumeData.accent_color}
+            />
+        </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-slate-50/50">
       <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 no-print">
           <div>
             <Link
               to={"/app"}
@@ -153,23 +174,33 @@ const ResumeBuilder = () => {
             </Link>
             <h1 className="text-2xl md:text-3xl font-bold text-slate-800 tracking-tight flex items-center gap-3">
               {resumeData.title || "Untitled Resume"}
-              <div className="text-[10px] font-bold text-green-700 bg-green-500/10 border border-green-200 rounded-full px-3 py-1 uppercase tracking-tighter">
+              <div className="flex items-center gap-2 text-[10px] font-bold text-green-700 bg-green-500/10 border border-green-200 rounded-full px-3 py-1 uppercase tracking-tighter">
+                <div className="size-1.5 bg-green-500 rounded-full animate-pulse" />
                 Live Editing
               </div>
             </h1>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 w-full md:w-auto">
+              <button
+                onClick={() => setShowPreviewMobile(!showPreviewMobile)}
+                className="md:hidden flex-1 flex items-center justify-center px-5 py-2.5 gap-2 text-xs font-bold rounded-xl bg-green-50 text-green-600 border border-green-200 active:scale-95 transition-all shadow-sm"
+              >
+                {showPreviewMobile ? <FileText size={14} /> : <EyeIcon size={14} />}
+                {showPreviewMobile ? "EDIT FORM" : "PREVIEW"}
+              </button>
+
               <button
                 onClick={changeResumeVisibility}
-                className={`flex items-center px-5 py-2.5 gap-2 text-xs font-bold rounded-xl transition-all active:scale-95 border ${
+                className={`flex-1 md:flex-none flex items-center justify-center px-5 py-2.5 gap-2 text-xs font-bold rounded-xl transition-all active:scale-95 border ${
                   resumeData.public 
                   ? "bg-green-500 text-white border-green-500 shadow-lg shadow-green-500/20" 
                   : "bg-white text-slate-600 border-slate-200 hover:border-slate-300"
                 }`}
               >
                 {resumeData.public ? <EyeIcon size={14} /> : <EyeOffIcon size={14} />}
-                {resumeData.public ? "PUBLIC" : "PRIVATE"}
+                <span className="hidden sm:inline">{resumeData.public ? "PUBLIC" : "PRIVATE"}</span>
+                <span className="sm:hidden">{resumeData.public ? "PUB" : "PRIV"}</span>
               </button>
               
               {resumeData.public && (
@@ -177,7 +208,7 @@ const ResumeBuilder = () => {
                   onClick={handleShare}
                   className="flex items-center px-5 py-2.5 gap-2 text-xs font-bold bg-white text-slate-600 border border-slate-200 rounded-xl hover:border-slate-300 active:scale-95 transition-all shadow-sm"
                 >
-                  <Share2Icon size={14} /> SHARE
+                  <Share2Icon size={14} /> <span className="hidden sm:inline">SHARE</span>
                 </button>
               )}
               
@@ -185,15 +216,15 @@ const ResumeBuilder = () => {
                 onClick={downloadResume}
                 className="flex items-center px-5 py-2.5 gap-2 text-xs font-bold bg-slate-900 text-white rounded-xl hover:bg-green-600 active:scale-95 transition-all shadow-lg shadow-slate-900/10"
               >
-                <DownloadIcon size={14} /> DOWNLOAD
+                <DownloadIcon size={14} /> <span className="hidden sm:inline">DOWNLOAD</span>
               </button>
           </div>
         </div>
 
         <div className="grid lg:grid-cols-12 gap-10">
           {/* Left Panel - Form */}
-          <div className="lg:col-span-5">
-            <div className="bg-white rounded-3xl shadow-2xl shadow-slate-200/50 border border-slate-100 overflow-hidden sticky top-24">
+          <div className={`lg:col-span-5 ${showPreviewMobile ? "hidden lg:block" : "block"} no-print`}>
+            <div className="bg-white rounded-3xl shadow-2xl shadow-slate-200/50 border border-slate-100 overflow-hidden lg:sticky lg:top-24">
               {/* Progress Bar */}
               <div className="h-1.5 w-full bg-slate-100 relative">
                 <div
@@ -356,9 +387,8 @@ const ResumeBuilder = () => {
             </div>
           </div>
 
-          {/* Right Panel - Resume Preview Area */}
-          <div className="lg:col-span-7">
-            <div className="bg-white rounded-3xl shadow-2xl shadow-slate-200/50 border border-slate-100 p-2 md:p-8">
+          <div className={`lg:col-span-7 ${!showPreviewMobile ? "hidden lg:block" : "block"}`}>
+            <div className="bg-transparent shadow-none border-none p-0 overflow-visible">
                 <ResumePreview
                     data={resumeData}
                     template={resumeData.template}

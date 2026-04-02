@@ -178,7 +178,7 @@ const Hero = () => {
 
         {/* Mobile Menu */}
         <div
-          className={`fixed inset-0 z-[100] bg-black/90 backdrop-blur-xl flex flex-col items-center justify-center gap-6 md:hidden transition-transform duration-500 ease-in-out transform ${
+          className={`fixed inset-0 z-100 bg-black/90 backdrop-blur-xl flex flex-col items-center justify-center gap-6 md:hidden transition-transform duration-500 ease-in-out transform ${
             menuOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
@@ -219,7 +219,7 @@ const Hero = () => {
           {/* Close Button */}
           <button
             onClick={() => setMenuOpen(false)}
-            className="flex items-center justify-center w-14 h-14 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 text-2xl animate-pulse hover:animate-none"
+            className="flex items-center justify-center w-14 h-14 bg-linear-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 text-2xl animate-pulse hover:animate-none"
             aria-label="Close menu"
           >
             ✕
@@ -249,7 +249,7 @@ const Hero = () => {
               <img
                 src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200"
                 alt="user3"
-                className="size-8 object-cover rounded-full border-2 border-white hover:-translate-y-0.5 transition z-[1]"
+                className="size-8 object-cover rounded-full border-2 border-white hover:-translate-y-0.5 transition z-1"
               />
               <img
                 src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=200"
@@ -259,17 +259,17 @@ const Hero = () => {
               <img
                 src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200"
                 alt="user2"
-                className="size-8 object-cover rounded-full border-2 border-white hover:-translate-y-0.5 transition z-[3]"
+                className="size-8 object-cover rounded-full border-2 border-white hover:-translate-y-0.5 transition z-3"
               />
               <img
                 src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200"
                 alt="user3"
-                className="size-8 object-cover rounded-full border-2 border-white hover:-translate-y-0.5 transition z-[4]"
+                className="size-8 object-cover rounded-full border-2 border-white hover:-translate-y-0.5 transition z-4"
               />
               <img
                 src="https://randomuser.me/api/portraits/men/75.jpg"
                 alt="user5"
-                className="size-8 rounded-full border-2 border-white hover:-translate-y-0.5 transition z-[5]"
+                className="size-8 rounded-full border-2 border-white hover:-translate-y-0.5 transition z-5"
               />
             </div>
 
@@ -301,15 +301,15 @@ const Hero = () => {
           </div>
 
           {/* Headline + CTA */}
-          <h1 className="text-5xl md:text-6xl font-semibold max-w-5xl text-center mt-4 md:leading-[70px]">
+          <h1 className="text-4xl md:text-6xl font-semibold max-w-5xl text-center mt-4 leading-tight md:leading-[70px]">
             Land your dream jobs with{" "}
-            <span className=" bg-gradient-to-r from-green-700 to-green-600 bg-clip-text text-transparent text-nowrap">
+            <span className=" bg-linear-to-r from-green-700 to-green-600 bg-clip-text text-transparent text-nowrap">
               AI powered{" "}
             </span>{" "}
             Resume
           </h1>
 
-          <p className="max-w-md text-center text-base my-7">
+          <p className="max-w-md text-center text-sm md:text-base my-7 px-4">
             Create, edit and download professional resume with AI-powered
             assistance.
           </p>

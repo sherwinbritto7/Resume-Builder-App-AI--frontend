@@ -13,7 +13,7 @@ const Navbar = () => {
     dispatch(logout());
   };
   return (
-    <div className="bg-white border-b border-slate-100 sticky top-0 z-50">
+    <div className="bg-white border-b border-slate-100 sticky top-0 z-50 no-print">
       <nav className="flex items-center justify-between max-w-7xl mx-auto px-4 md:px-6 py-4">
         <Link to="/app" className="hover:opacity-80 transition-opacity">
           <img src="/logo.svg" alt="logo" className="h-10 w-auto" />
